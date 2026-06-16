@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Анастасия и Никита · Приглашение</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Marck+Script&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory:#f6f1e6;
+    --ivory-deep:#efe6d4;
+    --blue:#9bb6c7;
+    --blue-mid:#7d9fb4;
+    --blue-deep:#587d96;
+    --blue-ink:#42647c;
+    --line:#c9b9a0;
+    --surround:#2c2e2f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--surround);
+    font-family:"Cormorant Garamond",Georgia,serif;
+    color:var(--blue-ink);
+    -webkit-font-smoothing:antialiased;
+    padding:0;
+  }
+
+  /* The card sits on a dark surround like a physical invitation */
+  .card{
+    max-width:480px;
+    margin:0 auto;
+    background:var(--ivory);
+    box-shadow:0 30px 80px rgba(0,0,0,.55);
+    overflow:hidden;
+    position:relative;
+  }
+
+  /* Paper texture + faint vignette */
+  .panel{position:relative;padding:64px 34px;text-align:center;overflow:hidden}
+  .panel::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    mix-blend-mode:multiply;opacity:.7;
+  }
+  .cream{background:var(--ivory)}
+  .cream + .cream{border-top:1px solid rgba(201,185,160,.35)}
+  .blue{
+    background:linear-gradient(180deg,#9fb9c9,#8aaabf);
+    color:var(--ivory);
+  }
+  .blue .eyebrow,.blue .script,.blue .label,.blue .ornament-line span{color:var(--ivory)}
+
+  /* Type roles */
+  .eyebrow{
+    font-family:"Cormorant Garamond",serif;
+    text-transform:uppercase;letter-spacing:.42em;
+    font-size:.72rem;font-weight:600;color:var(--blue-deep);
+    margin-bottom:18px;padding-left:.42em;
+  }
+  .script{
+    font-family:"Marck Script",cursive;
+    color:var(--blue-deep);
+    font-size:clamp(1.35rem,5.5vw,1.7rem);
+    line-height:1.4;
+  }
+  .names{
+    font-family:"Playfair Display",serif;
+    font-weight:500;
+    letter-spacing:.06em;
+    line-height:1.04;
+    color:var(--blue-deep);
+    font-size:clamp(2.7rem,12vw,4rem);
+  }
+  .amp{
+    font-family:"Marck Script",cursive;
+    font-weight:400;letter-spacing:0;
+    font-size:clamp(1.6rem,7vw,2.2rem);
+    color:var(--blue-mid);
+    display:block;margin:2px 0;
+  }
+  .title{
+    font-family:"Playfair Display",serif;
+    font-weight:500;text-transform:uppercase;
+    letter-spacing:.16em;
+    font-size:clamp(1.6rem,6.5vw,2.2rem);
+    line-height:1.18;
+  }
+  .cream .title{color:var(--blue-deep)}
+  .body{
+    font-size:clamp(1.06rem,4.4vw,1.2rem);
+    line-height:1.75;letter-spacing:.015em;
+    max-width:33ch;margin:0 auto;
+  }
+  .label{
+    font-family:"Cormorant Garamond",serif;
+    text-transform:uppercase;letter-spacing:.34em;
+    font-size:.74rem;font-weight:600;color:var(--blue-deep);
+  }
+
+  /* Ornaments */
+  .swan{width:62px;height:auto;margin:0 auto 22px;display:block}
+  .blue .swan path,.blue .swan line{stroke:var(--ivory)}
+  .cream .swan path,.cream .swan line{stroke:var(--blue-deep)}
+
+  .ornament-line{
+    display:flex;align-items:center;justify-content:center;gap:14px;
+    margin:26px auto;max-width:230px;
+  }
+  .ornament-line::before,.ornament-line::after{
+    content:"";height:1px;flex:1;
+    background:linear-gradient(90deg,transparent,var(--line));
+  }
+  .ornament-line::after{background:linear-gradient(90deg,var(--line),transparent)}
+  .blue .ornament-line::before{background:linear-gradient(90deg,transparent,rgba(246,241,230,.7))}
+  .blue .ornament-line::after{background:linear-gradient(90deg,rgba(246,241,230,.7),transparent)}
+  .ornament-line span{color:var(--blue-mid);font-size:1.1rem}
+
+  /* Hero filigree frame */
+  .frame{position:relative;padding:46px 26px;margin:8px 0 4px}
+  .corner{position:absolute;width:62px;height:62px;opacity:.85}
+  .corner svg{width:100%;height:100%}
+  .corner path{fill:none;stroke:var(--blue-mid);stroke-width:1.4;stroke-linecap:round}
+  .c-tl{top:0;left:0}
+  .c-tr{top:0;right:0;transform:scaleX(-1)}
+  .c-bl{bottom:0;left:0;transform:scaleY(-1)}
+  .c-br{bottom:0;right:0;transform:scale(-1,-1)}
+  .frame-edge{position:absolute;background:var(--line);opacity:.5}
+  .fe-top{top:0;left:62px;right:62px;height:1px}
+  .fe-bot{bottom:0;left:62px;right:62px;height:1px}
+  .fe-left{left:0;top:62px;bottom:62px;width:1px}
+  .fe-right{right:0;top:62px;bottom:62px;width:1px}
+
+  .date-line{
+    font-family:"Cormorant Garamond",serif;font-style:italic;
+    font-size:1.18rem;color:var(--blue-mid);margin-top:6px;letter-spacing:.02em;
+  }
+
+  /* Countdown */
+  .bigdate{
+    font-family:"Playfair Display",serif;font-weight:500;
+    font-size:clamp(2.4rem,11vw,3.6rem);letter-spacing:.05em;
+    color:var(--blue-deep);margin:10px 0 4px;
+  }
+  .bigdate .dot{color:var(--blue);padding:0 .12em}
+  .countdown{display:flex;justify-content:center;gap:16px;margin-top:26px}
+  .cd-cell{min-width:56px}
+  .cd-num{
+    font-family:"Playfair Display",serif;font-size:1.9rem;font-weight:500;
+    color:var(--blue-deep);line-height:1;
+  }
+  .cd-lab{
+    font-family:"Cormorant Garamond",serif;text-transform:uppercase;
+    letter-spacing:.18em;font-size:.62rem;color:var(--blue-mid);margin-top:8px;
+  }
+
+  /* Program timeline */
+  .timeline{margin:30px auto 0;max-width:260px;text-align:center}
+  .tl-item{padding:18px 0;position:relative}
+  .tl-item + .tl-item{border-top:1px solid rgba(246,241,230,.35)}
+  .tl-name{
+    font-family:"Playfair Display",serif;font-style:italic;
+    font-size:1.5rem;font-weight:400;margin-bottom:6px;
+  }
+  .tl-time{
+    font-family:"Cormorant Garamond",serif;letter-spacing:.34em;
+    font-weight:600;font-size:.95rem;
+  }
+
+  /* Venue */
+  .venue-illu{width:170px;height:auto;margin:6px auto 20px;display:block;opacity:.92}
+  .venue-illu path,.venue-illu line,.venue-illu rect,.venue-illu polyline{
+    fill:none;stroke:var(--blue-mid);stroke-width:1.3;stroke-linejoin:round;stroke-linecap:round;
+  }
+  .venue-name{
+    font-family:"Playfair Display",serif;font-style:italic;
+    font-size:1.7rem;color:var(--blue-deep);margin:4px 0 4px;
+  }
+
+  /* Buttons */
+  .btn{
+    display:inline-block;cursor:pointer;border:none;background:none;
+    font-family:"Cormorant Garamond",serif;text-transform:uppercase;
+    letter-spacing:.28em;font-size:.78rem;font-weight:600;
+    padding:13px 30px;margin-top:8px;color:var(--blue-deep);
+    border:1px solid var(--blue-mid);border-radius:2px;
+    transition:background .35s ease,color .35s ease;text-decoration:none;
+  }
+  .btn:hover,.btn:focus-visible{background:var(--blue-deep);color:var(--ivory);outline:none}
+  .blue .btn{color:var(--ivory);border-color:rgba(246,241,230,.8)}
+  .blue .btn:hover,.blue .btn:focus-visible{background:var(--ivory);color:var(--blue-deep)}
+
+  /* Details paragraphs */
+  .detail-block + .detail-block{margin-top:22px}
+
+  /* RSVP */
+  .rsvp-thanks{display:none;margin-top:18px}
+  .rsvp-thanks.show{display:block;animation:fadeUp .6s ease both}
+  .rsvp-contact{margin-top:12px;font-style:italic;font-size:1.1rem;color:var(--blue-mid)}
+
+  /* Music toggle */
+  .music-btn{
+    position:fixed;top:16px;right:16px;z-index:40;
+    width:48px;height:48px;border-radius:50%;
+    background:rgba(88,125,150,.92);border:1px solid rgba(246,241,230,.5);
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    box-shadow:0 6px 18px rgba(0,0,0,.3);transition:transform .3s ease;
+  }
+  .music-btn:hover{transform:scale(1.06)}
+  .music-btn svg{width:22px;height:22px;fill:var(--ivory)}
+  .music-btn .wave{transform-origin:center;display:none}
+  .music-btn.playing .wave{display:block;animation:pulse 1.6s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
+
+  .footer-note{
+    font-family:"Marck Script",cursive;color:var(--blue-mid);
+    font-size:1.25rem;margin-top:22px;line-height:1.5;
+  }
+
+  /* Scroll reveal */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity 1s ease,transform 1s ease}
+  .reveal.in{opacity:1;transform:none}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    .music-btn.playing .wave{animation:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+<!-- Music toggle -->
+<button class="music-btn" id="musicBtn" aria-label="Включить музыку" aria-pressed="false">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M9 17.5a2.5 2.5 0 1 1-2.5-2.5c.4 0 .77.09 1.1.25V6.2l8-1.6v8.9a2.5 2.5 0 1 1-2.5-2.5c.4 0 .77.09 1.1.25V6.6l-5 1V17.5z"/>
+    <g class="wave"><circle cx="19" cy="5" r="1.4" opacity="0"/></g>
+  </svg>
+</button>
+
+<main class="card">
+
+  <!-- 1 · HERO -->
+  <section class="panel cream">
+    <div class="reveal">
+      <svg class="swan" viewBox="0 0 100 70" aria-hidden="true">
+        <path fill="none" stroke-width="2" stroke-linecap="round" d="M22 60 C 6 56 11 33 36 35 C 54 36 59 47 61 33 C 63 21 54 16 62 9 C 67 5 76 7 75 16 C 75 20 72 22 68 21"/>
+        <line x1="22" y1="64" x2="78" y2="64" stroke-width="1" opacity=".5"/>
+        <line x1="30" y1="68" x2="70" y2="68" stroke-width="1" opacity=".35"/>
+      </svg>
+      <p class="eyebrow">Save the date</p>
+      <div class="frame">
+        <span class="corner c-tl"><svg viewBox="0 0 62 62"><path d="M4 58 C 4 30 30 4 58 4 M16 58 C 16 36 36 16 58 16 M28 16 C 24 12 20 10 16 12 M16 28 C 12 24 10 20 12 16"/></svg></span>
+        <span class="corner c-tr"><svg viewBox="0 0 62 62"><path d="M4 58 C 4 30 30 4 58 4 M16 58 C 16 36 36 16 58 16 M28 16 C 24 12 20 10 16 12 M16 28 C 12 24 10 20 12 16"/></svg></span>
+        <span class="corner c-bl"><svg viewBox="0 0 62 62"><path d="M4 58 C 4 30 30 4 58 4 M16 58 C 16 36 36 16 58 16 M28 16 C 24 12 20 10 16 12 M16 28 C 12 24 10 20 12 16"/></svg></span>
+        <span class="corner c-br"><svg viewBox="0 0 62 62"><path d="M4 58 C 4 30 30 4 58 4 M16 58 C 16 36 36 16 58 16 M28 16 C 24 12 20 10 16 12 M16 28 C 12 24 10 20 12 16"/></svg></span>
+        <span class="frame-edge fe-top"></span><span class="frame-edge fe-bot"></span>
+        <span class="frame-edge fe-left"></span><span class="frame-edge fe-right"></span>
+
+        <h1 class="names">АНАСТАСИЯ<span class="amp">и</span>НИКИТА</h1>
+        <p class="date-line">суббота, 25 июля 2026</p>
+      </div>
+      <p class="script" style="margin-top:18px">Приглашаем вас<br>разделить с нами этот день</p>
+    </div>
+  </section>
+
+  <!-- 2 · DEAR GUESTS -->
+  <section class="panel blue">
+    <div class="reveal">
+      <p class="label">Дорогие гости</p>
+      <div class="ornament-line"><span>❧</span></div>
+      <p class="body">С огромной радостью и трепетом приглашаем вас разделить с нами самый важный и счастливый день нашей жизни — день, когда мы станем семьёй.</p>
+    </div>
+  </section>
+
+  <!-- 3 · DATE / COUNTDOWN -->
+  <section class="panel cream">
+    <div class="reveal">
+      <p class="script">запомните эту дату</p>
+      <p class="bigdate">25<span class="dot">·</span>07<span class="dot">·</span>26</p>
+      <div class="ornament-line"><span>✦</span></div>
+      <div class="countdown" id="countdown" aria-live="polite">
+        <div class="cd-cell"><div class="cd-num" id="cd-d">—</div><div class="cd-lab">дней</div></div>
+        <div class="cd-cell"><div class="cd-num" id="cd-h">—</div><div class="cd-lab">часов</div></div>
+        <div class="cd-cell"><div class="cd-num" id="cd-m">—</div><div class="cd-lab">минут</div></div>
+        <div class="cd-cell"><div class="cd-num" id="cd-s">—</div><div class="cd-lab">секунд</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · PROGRAM -->
+  <section class="panel blue">
+    <div class="reveal">
+      <p class="title">Программа<br>дня</p>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-name">Сбор гостей</div><div class="tl-time">15:30</div></div>
+        <div class="tl-item"><div class="tl-name">Церемония</div><div class="tl-time">16:00</div></div>
+        <div class="tl-item"><div class="tl-name">Фуршет</div><div class="tl-time">17:00</div></div>
+        <div class="tl-item"><div class="tl-name">Банкет</div><div class="tl-time">18:00</div></div>
+        <div class="tl-item"><div class="tl-name">Финал вечера</div><div class="tl-time">23:00</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · VENUE -->
+  <section class="panel cream">
+    <div class="reveal">
+      <p class="title" style="margin-bottom:8px">Место<br>проведения</p>
+      <svg class="venue-illu" viewBox="0 0 200 120" aria-hidden="true">
+        <polyline points="20,52 100,18 180,52"/>
+        <line x1="28" y1="52" x2="28" y2="98"/>
+        <line x1="172" y1="52" x2="172" y2="98"/>
+        <rect x="28" y="98" width="144" height="6"/>
+        <line x1="14" y1="104" x2="186" y2="104"/>
+        <line x1="58" y1="56" x2="58" y2="98"/>
+        <line x1="84" y1="56" x2="84" y2="98"/>
+        <line x1="116" y1="56" x2="116" y2="98"/>
+        <line x1="142" y1="56" x2="142" y2="98"/>
+        <line x1="44" y1="56" x2="44" y2="98"/>
+        <line x1="100" y1="56" x2="100" y2="98"/>
+        <line x1="158" y1="56" x2="158" y2="98"/>
+        <path d="M92 98 L92 78 Q100 70 108 78 L108 98"/>
+        <line x1="28" y1="56" x2="172" y2="56"/>
+      </svg>
+      <p class="venue-name">Банкетный зал «____»</p>
+      <p class="label" style="color:var(--blue-mid)">Город Железногорск</p>
+      <div style="margin-top:18px">
+        <a class="btn" id="mapBtn" href="https://yandex.ru/maps/?text=Железногорск%20банкетный%20зал" target="_blank" rel="noopener">На карте</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · DETAILS -->
+  <section class="panel blue">
+    <div class="reveal">
+      <p class="title">Детали</p>
+      <div class="ornament-line"><span>❧</span></div>
+      <div class="detail-block">
+        <p class="label">Дресс-код</p>
+        <p class="body" style="margin-top:10px">Будем благодарны, если вы поддержите палитру торжества — пыльно-голубой, кремовый и пудровые оттенки. Дамам — элегантные платья, мужчинам — костюмы.</p>
+      </div>
+      <div class="detail-block">
+        <p class="label">Подарки</p>
+        <p class="body" style="margin-top:10px">Самый главный подарок для нас — ваше присутствие и хорошее настроение. Если захочется что-то добавить, мы будем рады поддержке нашего семейного бюджета в конверте.</p>
+      </div>
+      <div class="detail-block">
+        <p class="label">Просьба</p>
+        <p class="body" style="margin-top:10px">Пожалуйста, не дарите живые цветы — после церемонии им будет негде стоять. Один цветок в наш общий букет вы сможете взять на месте.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · RSVP -->
+  <section class="panel cream">
+    <div class="reveal">
+      <svg class="swan" viewBox="0 0 100 70" aria-hidden="true">
+        <path fill="none" stroke-width="2" stroke-linecap="round" d="M22 60 C 6 56 11 33 36 35 C 54 36 59 47 61 33 C 63 21 54 16 62 9 C 67 5 76 7 75 16 C 75 20 72 22 68 21"/>
+        <line x1="22" y1="64" x2="78" y2="64" stroke-width="1" opacity=".5"/>
+        <line x1="30" y1="68" x2="70" y2="68" stroke-width="1" opacity=".35"/>
+      </svg>
+      <p class="script">подтвердите, пожалуйста,<br>своё присутствие</p>
+      <p class="body" style="margin-top:14px">Нам важно знать, что вы будете рядом. Сообщите о своём решении до 25 июня 2026 года.</p>
+      <div style="margin-top:20px">
+        <button class="btn" id="rsvpBtn">Я буду</button>
+      </div>
+      <div class="rsvp-thanks" id="rsvpThanks">
+        <p class="script">Спасибо! Будем счастливы видеть вас ✦</p>
+        <p class="rsvp-contact">Напишите нам: +7 ___ ___ __ __</p>
+      </div>
+      <p class="footer-note">с любовью,<br>Анастасия и Никита</p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  /* ---------- Scroll reveal ---------- */
+  (function(){
+    var els=document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
+    },{threshold:.18});
+    els.forEach(function(e){io.observe(e);});
+  })();
+
+  /* ---------- Countdown ---------- */
+  (function(){
+    var target=new Date('2026-07-25T16:00:00').getTime();
+    var d=document.getElementById('cd-d'),h=document.getElementById('cd-h'),
+        m=document.getElementById('cd-m'),s=document.getElementById('cd-s');
+    function pad(n){return n<10?'0'+n:''+n;}
+    function tick(){
+      var diff=target-Date.now();
+      if(diff<=0){d.textContent='0';h.textContent='00';m.textContent='00';s.textContent='00';return;}
+      var dd=Math.floor(diff/86400000);
+      var hh=Math.floor(diff%86400000/3600000);
+      var mm=Math.floor(diff%3600000/60000);
+      var ss=Math.floor(diff%60000/1000);
+      d.textContent=dd;h.textContent=pad(hh);m.textContent=pad(mm);s.textContent=pad(ss);
+    }
+    tick();setInterval(tick,1000);
+  })();
+
+  /* ---------- RSVP ---------- */
+  (function(){
+    var btn=document.getElementById('rsvpBtn'),thanks=document.getElementById('rsvpThanks');
+    btn.addEventListener('click',function(){
+      thanks.classList.add('show');
+      btn.style.display='none';
+    });
+  })();
+
+  /* ---------- Gentle background music (Web Audio) ---------- */
+  (function(){
+    var btn=document.getElementById('musicBtn');
+    var ctx,master,playing=false,timer,nextTime,step=0;
+    // Calm pentatonic loop in D major — always pleasant, no dissonance
+    var N={D3:146.83,A3:220.00,D4:293.66,E4:329.63,F4s:369.99,A4:440.00,B4:493.88,D5:587.33};
+    var melody=[N.A4,N.F4s,N.E4,N.D4,N.E4,N.F4s,N.A4,N.B4,N.A4,N.F4s,N.E4,N.D4,N.E4,N.D4,N.F4s,N.E4];
+    var bass  =[N.D3,0,N.A3,0,N.D3,0,N.A3,0,N.D3,0,N.A3,0,N.D3,0,N.A3,0];
+    var beat=0.46;
+
+    function voice(freq,t,dur,peak,type){
+      if(!freq)return;
+      var o=ctx.createOscillator(),g=ctx.createGain(),f=ctx.createBiquadFilter();
+      o.type=type||'triangle';o.frequency.value=freq;
+      f.type='lowpass';f.frequency.value=1900;
+      g.gain.setValueAtTime(0,t);
+      g.gain.linearRampToValueAtTime(peak,t+0.06);
+      g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+      o.connect(f);f.connect(g);g.connect(master);
+      o.start(t);o.stop(t+dur+0.05);
+    }
+    function schedule(){
+      while(nextTime<ctx.currentTime+0.2){
+        voice(melody[step%melody.length],nextTime,beat*1.8,0.16,'triangle');
+        voice(bass[step%bass.length],nextTime,beat*2.2,0.10,'sine');
+        nextTime+=beat;step++;
+      }
+      timer=setTimeout(schedule,60);
+    }
+    function start(){
+      ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();
+      master=ctx.createGain();master.gain.value=0;master.connect(ctx.destination);
+      master.gain.linearRampToValueAtTime(0.5,ctx.currentTime+1.2);
+      nextTime=ctx.currentTime+0.1;step=0;schedule();
+      playing=true;btn.classList.add('playing');btn.setAttribute('aria-pressed','true');
+    }
+    function stop(){
+      if(master){master.gain.linearRampToValueAtTime(0,ctx.currentTime+0.4);}
+      clearTimeout(timer);
+      playing=false;btn.classList.remove('playing');btn.setAttribute('aria-pressed','false');
+    }
+    btn.addEventListener('click',function(){
+      if(ctx&&ctx.state==='suspended'){ctx.resume();}
+      playing?stop():start();
+    });
+  })();
+</script>
+</body>
+</html>
